@@ -1,6 +1,7 @@
 D-Ghoshal-Repo
 ==============
 
+I HAVE 3 PLOTS, I COULD NOT PASTE OR ATTACH THE PLOTS FOR SOME REASON. The file is plots_for_proj.docx I added
 project assignment 
 
 
