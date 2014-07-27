@@ -91,6 +91,7 @@ Exploratory Analysis:
 We first examined the data carefully. The raw data was particularly examined to 1> find any missing values 2> quality of data and 3> checking if any conversion or transformation needed to continue our analysis.
 We are to report that in our system, we are satisfied with the quality of data and we did have conversion or transformation needed for NA values in training data. .
 Then we reviewed our lecture videos and texts to find the best approach we should consider. In this effort we consulted some publications [4],[5],6] and a good book [7] of Data Analysis. Such review convinced us to follow the statistical analysis of tree and we are going to describe such analysis in the following section.
+
 Statistical Analysis:
 In the first step of the Statistical Analysis, after playing with several functions (e.g. glm etc.) we decided to follow the Tree based regression [7] and provided the following command.
 >
@@ -133,7 +134,8 @@ Since our Cross-validation rate is low, we did not have to play with any lower v
 We now further researched as above but with the randomForest function.
 > rf <- randomForest(classe ~ roll_belt+pitch_belt+var_total_accel_belt+avg_roll_belt+ rtab.rf <- randomForest(trainData$activity ~ ., method ="class", data = trainData, importance=TRUE)
 >rf
-> rf
+> r
+f
 Call:
 randomForest(formula = classe ~ roll_belt + pitch_belt + var_total_accel_belt + avg_roll_belt + stddev_roll_belt +
 var_roll_belt + avg_pitch_belt + stddev_pitch_belt + var_pitch_belt + avg_yaw_belt + stddev_yaw_belt + var_yaw_belt, data = train_file_wona, method = "class", importance = TRUE)
@@ -149,19 +151,30 @@ C 5 14 42 9 0 0.4000000
 D 9 5 8 45 2 0.3478261
 E 6 3 4 1 65 0.1772152
 >
+
+
 Since OOB estimate of error rate above is also very low and this function have several advantages over Tree regression e.g. can show the importance of other variables on the independent variable (activity) and the confusion matrix provides good information , we decided to use randomForest on our trainData and get the predictive values by using predict function on the testData.
 Instead of all the variables we now do our testing according to our test file. For test file 1
 rf1 <-randomForest(classe ~ X+min_roll_belt+accel_belt_y+gyros_arm_y+amplitude_roll_arm+amplitude_yaw_dumbbell+magnet_dumbbell_z+var_accel_forearm,method ="class", data = train_file_wona, importance=TRUE)
 we now test our predict function for rf1 and test1.
+
 Similarly we go on for test2,test3…test20 Result : We have already shown some important result of randomForest Analysis above and the test results in programming section Now we are going to find out the important variables which influence the activity most in our test data. We execute the following command:
 >importance(rf)
 The above command produces all the influence factor of the important variables. The output is shown in Table 1. Table 1> importance(rf) A B C D E MeanDecreaseAccuracy MeanDecreaseGini
 roll_belt 8.936543 19.080990 14.148443 23.00905 10.308356 25.88919 32.40155 pitch_belt 18.674516 20.568082 9.983187 20.42890 7.014724 32.38966 32.51218 var_total_accel_belt 19.107613 12.339095 15.401240 15.53894 14.897551 25.26203 25.95097 avg_roll_belt 15.424055 25.392633 17.175713 27.51093 11.848030 33.87653 40.55130 stddev_roll_belt 13.849260 9.112913 14.768998 21.76049 13.482143 20.56879 27.49054 var_roll_belt 11.299545 10.400384 13.633305 19.17806 14.330338 19.74510 25.49317 avg_pitch_belt 23.780243 23.709577 15.392091 23.96524 8.142862 38.64012 35.70655 stddev_pitch_belt 10.261608 5.899581 11.367299 10.93988 6.724217 16.47890 15.09153 var_pitch_belt 13.017921 8.964453 10.140978 11.45394 5.346853 18.01619 13.51320 avg_yaw_belt 26.754839 23.815091 18.341031 18.84389 11.672856 40.78000 41.32098
 stddev_yaw_belt 11.590682 5.973404 9.548031 12.14861 1.976540 18.18711 13.24431 var_yaw_belt 10.226273 8.139015 11.662961 13.36427 2.330057 19.50471 17.69566 >
+
 It is clear from the above table 1 that the most influential variable on activity is “avg_yaw_belt” (The influence factor is 41.32). We actually showed a plot (Fig 1 Top plot) of this activity on trainData vs. that variable. It is apparent that we can have similar plots for other variables and can have a good picture of what are the major contributing factors of the sensor data. We can even detect, if some device is not properly functioning, the corresponding activity will show up with problems and we can pinpoint the particular variable responsible for malfunctioning.
 much are the differences in values of prediction against actual activity i.e how many of the predictions missed in proportion to actual values.
+
 Conclusion: Our research and analysis confirmed that we can produce a very good model to predict the classe of persons using sensor data. We have to selectively and carefully organize our data as training data and test data. Since in our case the error rate is very low (.29%) i.e success rate is high, we do not need to do any further validations. The class errors on activities as shown above in the confusion matrix clearly indicate that
-our prediction of each classe is sound and we can rely on our model. The randomForest package is actually good for relative complex trees and the accuracy of the activity is acceptable. There are many improvements on our model we can think of. We can always have a bigger training data and testing data. We can add more activity types or features and we can have some real time data placing the phone in more unstable locations. Ignoring the sensor data and collecting everything from a more sophisticated sensor system is another good idea Reference : 1. http://groupware.les.inf.puc-rio.br/har 2. https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv (TRAINING DATA) 3. https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv(TEST DATA) 4. : http://groupware.les.inf.puc-rio.br/har
+our prediction of each classe is sound and we can rely on our model. The randomForest package is actually good for relative complex trees and the accuracy of the activity is acceptable. There are many improvements on our model we can think of. We can always have a bigger training data and testing data. We can add more activity types or features and we can have some real time data placing the phone in more unstable locations. Ignoring the sensor data and collecting everything from a more sophisticated sensor system is another good idea 
+
+Reference : 
+1. http://groupware.les.inf.puc-rio.br/har 
+2.  https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv (TRAINING DATA) 
+3. https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv(TEST DATA) 
+4. : http://groupware.les.inf.puc-rio.br/har
 5. Activity Recognition using Cell Phone Accelerometers Jennifer R. Kwapisz, Gary M. Weiss, Samuel A. Moore
 6. Building Predictive Models in R Using the caret Package
 Max Kuhn. P_zer Global R&D 
