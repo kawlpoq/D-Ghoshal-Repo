@@ -9,6 +9,7 @@ https://github.com/kawlpoq/D-Ghoshal-Repo.git
 
 
 Title: Human Activity Prediction Using Accelerometer Data
+
 Introduction: Prediction of human activity using some real time data from a accelerometer is a challenging task and it is the idea of our project. In a sense this is the same goal of machine learning where predictions are made from sensor data. We are here to demonstrate how to use the R programming language and its many functions to accomplish our task. There were individuals who volunteered to conduct the experiments. Each individual carried a sensor device on the waist and performed different activities. In this project, our goal will be to use data from accelerometers on the belt, forearm, arm, and dumbell of 6 participants. They were asked to perform barbell lifts correctly and incorrectly in 5 different ways. An accelerometer and a gyroscope are attached which help to capture axial linear acceleration and axial angular velocity at some constant rate. The actual functioning of the accelerometer and gyroscope is best described in [4]Therefore, it would be very interesting and challenging to see how we can use such data in a very organized way to classify, test, analyze and finally to produce a good prediction.
 Method:
 Data Collection
