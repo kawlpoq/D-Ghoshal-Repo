@@ -97,6 +97,7 @@ In the first step of the Statistical Analysis, after playing with several functi
 >
 train.rpart <- rpart(classe ~ roll_belt+pitch_belt+var_total_accel_belt+avg_roll_belt+stddev_roll_belt+var_roll_belt+avg_pitch_belt+stddev_pitch_belt+var_pitch_belt+avg_yaw_belt+stddev_yaw_belt+var_yaw_belt, method ="class", data = train_file_wona, cp =0.0025)
 >
+
 Here we use the partition function rpart of R programming language. The dot(.) on the right side represents all available exploratory variables and cp the complexity parameter controls the cross-validation of the data. Increasing or decreasing cp we can find out how the error-rate is changing and thus determine the right value of our choice of cp.
 We then provided the command to plot cross-validation vs. cp. >plotcp(train.rpart)
 
@@ -126,23 +127,30 @@ CP nsplit rel error xerror xstd
 9 0.006734 18 0.36364 0.53199 0.033078
 10 0.003367 21 0.34343 0.52525 0.033000
 11 0.002500 24 0.33333 0.51178 0.032834
+
 > Here we can find -
 Cross-validation error rate = minimum xerro * Root node error
 = 0.511 *.73153
 = 0.3738
+
 Since our Cross-validation rate is low, we did not have to play with any lower value of cp.
 We now further researched as above but with the randomForest function.
 > rf <- randomForest(classe ~ roll_belt+pitch_belt+var_total_accel_belt+avg_roll_belt+ rtab.rf <- randomForest(trainData$activity ~ ., method ="class", data = trainData, importance=TRUE)
 >rf
 > r
 f
+
 Call:
 randomForest(formula = classe ~ roll_belt + pitch_belt + var_total_accel_belt + avg_roll_belt + stddev_roll_belt +
 var_roll_belt + avg_pitch_belt + stddev_pitch_belt + var_pitch_belt + avg_yaw_belt + stddev_yaw_belt + var_yaw_belt, data = train_file_wona, method = "class", importance = TRUE)
 Type of random forest: classification
+
 Number of trees: 500
+
 No. of variables tried at each split: 3
+
 OOB estimate of error rate: 29.8%
+
 Confusion matrix:
 A B C D E class.error
 A 74 14 9 11 1 0.3211009
@@ -159,8 +167,13 @@ rf1 <-randomForest(classe ~ X+min_roll_belt+accel_belt_y+gyros_arm_y+amplitude_r
 we now test our predict function for rf1 and test1.
 
 Similarly we go on for test2,test3…test20 Result : We have already shown some important result of randomForest Analysis above and the test results in programming section Now we are going to find out the important variables which influence the activity most in our test data. We execute the following command:
+
 >importance(rf)
-The above command produces all the influence factor of the important variables. The output is shown in Table 1. Table 1> importance(rf) A B C D E MeanDecreaseAccuracy MeanDecreaseGini
+
+The above command produces all the influence factor of the important variables. The output is shown in Table 1. Table 1> 
+
+importance(rf)
+A B C D E MeanDecreaseAccuracy MeanDecreaseGini
 roll_belt 8.936543 19.080990 14.148443 23.00905 10.308356 25.88919 32.40155 pitch_belt 18.674516 20.568082 9.983187 20.42890 7.014724 32.38966 32.51218 var_total_accel_belt 19.107613 12.339095 15.401240 15.53894 14.897551 25.26203 25.95097 avg_roll_belt 15.424055 25.392633 17.175713 27.51093 11.848030 33.87653 40.55130 stddev_roll_belt 13.849260 9.112913 14.768998 21.76049 13.482143 20.56879 27.49054 var_roll_belt 11.299545 10.400384 13.633305 19.17806 14.330338 19.74510 25.49317 avg_pitch_belt 23.780243 23.709577 15.392091 23.96524 8.142862 38.64012 35.70655 stddev_pitch_belt 10.261608 5.899581 11.367299 10.93988 6.724217 16.47890 15.09153 var_pitch_belt 13.017921 8.964453 10.140978 11.45394 5.346853 18.01619 13.51320 avg_yaw_belt 26.754839 23.815091 18.341031 18.84389 11.672856 40.78000 41.32098
 stddev_yaw_belt 11.590682 5.973404 9.548031 12.14861 1.976540 18.18711 13.24431 var_yaw_belt 10.226273 8.139015 11.662961 13.36427 2.330057 19.50471 17.69566 >
 
