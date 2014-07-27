@@ -28,7 +28,9 @@ test_file <- read.csv("http://d396qusza40orc.cloudfront.net/predmachlearn/pml-te
 [1] 406
 > ncol(train_file_wona)
 [1] 160
+
 Sample summary
+
 > summary(train_file_wona)
 X user_name raw_timestamp_part_1 raw_timestamp_part_2 cvtd_timestamp new_window num_window roll_belt
 Min. : 24 adelmo :83 Min. :1.322e+09 Min. :492326 30/11/2011 17:11: 36 no : 0 Min. : 2.0 Min. :-27.80
@@ -38,14 +40,18 @@ Mean :10091 eurico :54 Mean :1.323e+09 Mean :971714 02/12/2011 13:35: 28 Mean :4
 3rd Qu.:15056 jeremy :77 3rd Qu.:1.323e+09 3rd Qu.:992286 30/11/2011 17:12: 28 3rd Qu.:665.5 3rd Qu.:123.00
 Max. :19622 pedro :55 Max. :1.323e+09 Max. :998801 05/12/2011 11:24: 27 Max. :864.0 Max. :161.00
 (Other) :221
+
 rf <- randomForest(classe ~ roll_belt+pitch_belt+var_total_accel_belt+avg_roll_belt+stddev_roll_belt+var_roll_belt+avg_pitch_belt+stddev_pitch_belt+var_pitch_belt+avg_yaw_belt+stddev_yaw_belt+var_yaw_belt,data=train_file_wona)
+
 > rf
+
 Call:
 randomForest(formula = classe ~ roll_belt + pitch_belt + var_total_accel_belt + avg_roll_belt + stddev_roll_belt + var_roll_belt + avg_pitch_belt + stddev_pitch_belt + var_pitch_belt + avg_yaw_belt + stddev_yaw_belt + var_yaw_belt, data = train_file_wona)
 Type of random forest: classification
 Number of trees: 500
 No. of variables tried at each split: 3
 OOB estimate of error rate: 30.05%
+
 Confusion matrix:
 A B C D E class.error
 A 74 14 13 7 1 0.3211009
@@ -53,9 +59,11 @@ B 12 60 5 1 1 0.2405063
 C 10 14 39 7 0 0.4428571
 D 8 6 7 46 2 0.3333333
 E 6 3 4 1 65 0.1772152
+
 > table(train_file_wona$classe)
 A B C D E
 109 79 70 69 79
+
 > head(getTree(rf,1,labelVar=TRUE),7)
 left daughter right daughter split var split point status prediction
 1 2 3 avg_roll_belt 130.00000 1 <NA>
@@ -78,6 +86,7 @@ prediction
 183 <NA>
 184 <NA>
 185 C
+
 Exploratory Analysis:
 We first examined the data carefully. The raw data was particularly examined to 1> find any missing values 2> quality of data and 3> checking if any conversion or transformation needed to continue our analysis.
 We are to report that in our system, we are satisfied with the quality of data and we did have conversion or transformation needed for NA values in training data. .
@@ -89,7 +98,9 @@ train.rpart <- rpart(classe ~ roll_belt+pitch_belt+var_total_accel_belt+avg_roll
 >
 Here we use the partition function rpart of R programming language. The dot(.) on the right side represents all available exploratory variables and cp the complexity parameter controls the cross-validation of the data. Increasing or decreasing cp we can find out how the error-rate is changing and thus determine the right value of our choice of cp.
 We then provided the command to plot cross-validation vs. cp. >plotcp(train.rpart)
+
 The output of
+
 > printcp(train.rpart)
 Classification tree:
 rpart(formula = classe ~ roll_belt + pitch_belt + var_total_accel_belt +
@@ -101,6 +112,7 @@ Variables actually used in tree construction:
 [8] var_total_accel_belt var_yaw_belt
 Root node error: 297/406 = 0.73153
 n= 406
+
 CP nsplit rel error xerror xstd
 1 0.202020 0 1.00000 1.00000 0.030066
 2 0.041751 1 0.79798 0.79798 0.033442
